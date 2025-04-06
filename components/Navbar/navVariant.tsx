@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaArrowLeft } from "react-icons/fa6";
 import ConnectButton from "../ConnectButton";
 import WalletItem from "./WalletItem";
@@ -6,8 +6,12 @@ import { useRouter } from "next/navigation";
 import { useWallet } from "@/context/WalletContext";
 
 const NavVariant = () => {
-  const { walletAddress } = useWallet();
+  const { walletAddress, switchToSepolia } = useWallet();
   const router = useRouter();
+
+  useEffect(() => {
+    switchToSepolia();
+  }, []);
   return (
     <nav className="w-full h-20 left-0   py-4  flex items-center justify-between sticky">
       <div

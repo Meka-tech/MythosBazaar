@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 
 import Hamburger from "hamburger-react";
 import { MdCreate } from "react-icons/md";
+import { IoMdCart } from "react-icons/io";
 
 const HamburgerMenu = ({
   isOpen,
@@ -34,11 +35,11 @@ const HamburgerMenu = ({
           isOpen
             ? "translate-y-0 opacity-100 z-20"
             : "-translate-y-[100%] opacity-0 z-0"
-        } w-fit absolute top-full mt-2 transform  -translate-x-[80%] bg-neutral-900 py-2 px-1 rounded-lg shadow-lg cursor-pointer transition-all flex flex-col gap-1 items-center justify-between ease-in-out duration-100 `}
+        } w-[15rem] absolute top-full mt-2 transform  -translate-x-[80%] bg-neutral-900 py-2 px-1 rounded-lg shadow-lg cursor-pointer transition-all flex flex-col gap-1 items-center justify-between ease-in-out duration-100 `}
         ref={ref}
       >
         <div
-          className=" w-full  text-white text-center px-4  py-1.5 rounded-lg  cursor-pointer transition-all flex  items-center gap-2 hover:bg-neutral-800"
+          className=" w-full  text-white text-center px-4  py-1.5 rounded-lg  cursor-pointer transition-all flex  items-center gap-2 hover:bg-neutral-800 mb-2 "
           onClick={() => {
             router.push("/profile");
           }}
@@ -47,7 +48,16 @@ const HamburgerMenu = ({
           Profile
         </div>
         <div
-          className=" w-full  text-white text-center px-4  py-1.5 rounded-lg  cursor-pointer transition-all flex  items-center gap-2 hover:bg-neutral-800"
+          className=" w-full  text-white text-center px-4  py-1.5 rounded-lg  cursor-pointer transition-all inline-flex  items-center gap-2 hover:bg-neutral-800 mb-2"
+          onClick={() => {
+            router.push("/market-place");
+          }}
+        >
+          <IoMdCart />
+          Market Place
+        </div>
+        <div
+          className=" w-full  text-white text-center px-4  py-1.5 rounded-lg  cursor-pointer transition-all flex  items-center gap-2 hover:bg-neutral-800 mb-2"
           onClick={() => {
             router.push("/create");
           }}
@@ -57,7 +67,7 @@ const HamburgerMenu = ({
         </div>
         <div
           className={
-            " w-full  text-white text-center  py-1.5 rounded-lg  px-4 cursor-pointer transition-all flex  items-center gap-2 hover:bg-neutral-800 "
+            " w-full  text-white text-center  py-1.5 rounded-lg  px-4 cursor-pointer transition-all flex  items-center gap-2 hover:bg-neutral-800 mb-2 "
           }
           onClick={() => {
             disconnectWallet();

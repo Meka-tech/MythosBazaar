@@ -3,23 +3,21 @@
 import { useEffect } from "react";
 import { useWallet } from "@/context/WalletContext";
 import { useRouter } from "next/navigation";
+import ConnectWalletPage from "./connectWalletPage";
+import Footer from "@/components/Footer";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const { signer, walletAddress } = useWallet();
+  const { signer, walletAddress, switchToSepolia } = useWallet();
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (!walletAddress) {
-        router.back();
-      }
-    }, 1000);
-    return () => clearTimeout(timeout);
-  }, [walletAddress, router]);
+  if (!walletAddress) {
+    return <ConnectWalletPage />;
+  }
 
   return (
     <>
       <main>{children}</main>
+      <Footer />
     </>
   );
 }

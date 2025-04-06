@@ -1,9 +1,6 @@
 "use client";
 import React, { useMemo, useState } from "react";
 import { useWallet } from "@/context/WalletContext";
-import ConnectButton from "@/components/ConnectButton";
-import WalletItem from "@/components/WalletItem";
-import { FaArrowLeft } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { uploadImage, uploadJson } from "@/actions/upload";
 import { mintNFT } from "@/actions/mintNft";
@@ -18,7 +15,7 @@ import { toast } from "react-toastify";
 export default function Create() {
   const router = useRouter();
 
-  const { signer } = useWallet();
+  const { signer, switchToSepolia } = useWallet();
   const priceMinimum = "0.1";
   const [formData, setFormData] = useState({
     title: "",
@@ -95,6 +92,7 @@ export default function Create() {
       ) {
         return;
       }
+      switchToSepolia();
 
       const imageUri = await uploadImage(formData.image);
 

@@ -8,13 +8,15 @@ interface WalletContextType {
   walletAddress: string | null;
   connectWallet: () => Promise<void>;
   disconnectWallet: () => Promise<void>;
+  switchToSepolia: () => Promise<void>;
 }
 
 const WalletContext = createContext<WalletContextType>({
   signer: null,
   walletAddress: null,
   connectWallet: async () => {},
-  disconnectWallet: async () => {}
+  disconnectWallet: async () => {},
+  switchToSepolia: async () => {}
 });
 
 export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
@@ -37,6 +39,57 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const switchToSepolia = async () => {
+    if (!window.ethereum) {
+      alert("Please install MetaMask.");
+      return;
+    }
+
+    try {
+      const sepoliaChainId = "0xaa36a7"; // 11155111 in hex
+
+      const currentChainId = await window.ethereum.request({
+        method: "eth_chainId"
+      });
+
+      if (currentChainId === sepoliaChainId) {
+        console.log("Already on Sepolia network");
+        return;
+      }
+
+      await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: sepoliaChainId }]
+      });
+    } catch (switchError: any) {
+      if (switchError.code === 4902) {
+        // Chain not added to MetaMask
+        try {
+          await window.ethereum.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: "0xaa36a7",
+                chainName: "Ethereum Sepolia Testnet",
+                nativeCurrency: {
+                  name: "SepoliaETH",
+                  symbol: "ETH",
+                  decimals: 18
+                },
+                rpcUrls: ["https://rpc.sepolia.org"],
+                blockExplorerUrls: ["https://sepolia.etherscan.io"]
+              }
+            ]
+          });
+        } catch (addError) {
+          console.error("Failed to add Sepolia:", addError);
+        }
+      } else {
+        console.error("Failed to switch to Sepolia:", switchError);
+      }
+    }
+  };
+
   const connectWallet = async () => {
     if (!window.ethereum) {
       alert("Please install MetaMask.");
@@ -48,6 +101,7 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
       const signer = await provider.getSigner();
       setSigner(signer);
       setWalletAddress(await signer.getAddress());
+      switchToSepolia();
     } catch (error) {
       console.error("Error connecting wallet:", error);
     }
@@ -66,7 +120,13 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <WalletContext.Provider
-      value={{ signer, walletAddress, connectWallet, disconnectWallet }}
+      value={{
+        signer,
+        walletAddress,
+        connectWallet,
+        disconnectWallet,
+        switchToSepolia
+      }}
     >
       {children}
     </WalletContext.Provider>

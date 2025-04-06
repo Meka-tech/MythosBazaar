@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
 import { WalletProvider } from "../context/WalletContext";
 import Footer from "@/components/Footer";
 import { ToastContainer } from "react-toastify";
@@ -38,7 +37,6 @@ export default function RootLayout({
               pauseOnHover
               theme="dark"
             />
-            <Footer />
           </div>
         </body>
       </html>

@@ -1,17 +1,13 @@
 "use client";
+import { fetchNFTs } from "@/actions/fetchNFTs";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
 import NFTGrid from "@/components/NFTGrid";
 import { MarketItem } from "@/types/types";
-import { useEffect, useState } from "react";
-import { fetchNFTs } from "@/actions/fetchNFTs";
-import Navbar from "@/components/Navbar";
 import { showErrorToast } from "@/utils/toast";
-import PrimaryButton from "@/components/button";
-import Footer from "@/components/Footer";
-import HowItWorks from "./home/howItWorks";
-import Header from "./home/header";
-import OriginalCollection from "./home/original";
+import React, { useEffect, useState } from "react";
 
-export default function Home() {
+const MarketPlace = () => {
   const [nfts, setNfts] = useState<MarketItem[]>();
   const [loading, setLoading] = useState(false);
 
@@ -31,16 +27,22 @@ export default function Home() {
   useEffect(() => {
     FetchMarketItems();
   }, []);
-
   return (
-    <section className="min-h-dvh">
+    <section className="w-full">
       <Navbar />
-      <div className=" mt-20 px-2 md:px-0">
-        <Header />
-        <OriginalCollection />
-        <HowItWorks />
+      <div className="mt-8">
+        <h1 className="font-bold text-3xl mb-20">Market Place</h1>
+        <div className="min-h-dvh mb-10 ">
+          <NFTGrid
+            items={nfts?.filter((item) => !item.sold)}
+            loading={loading}
+            itemsPerPage={20}
+          />
+        </div>
       </div>
       <Footer />
     </section>
   );
-}
+};
+
+export default MarketPlace;

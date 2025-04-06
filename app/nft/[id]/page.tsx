@@ -14,6 +14,7 @@ import SkeletonComponent from "./skeleton";
 import { buyNFT } from "@/actions/buyNFT";
 import { showErrorToast } from "@/utils/toast";
 import { toast } from "react-toastify";
+import Footer from "@/components/Footer";
 
 const NFTItem = () => {
   const params = useParams();
@@ -147,6 +148,7 @@ const NFTItem = () => {
       ) : (
         <></>
       )}
+      <Footer />
     </section>
   );
 };

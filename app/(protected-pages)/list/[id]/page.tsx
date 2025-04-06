@@ -19,7 +19,7 @@ export default function ListItem() {
   const params = useParams();
   const router = useRouter();
   const tokenId = params.id;
-  const { signer, walletAddress } = useWallet();
+  const { signer } = useWallet();
   const [loading, setLoading] = useState(true);
   const [listing, setListing] = useState(false);
   const [NFTDetails, setNFTDetails] = useState<MarketItem>();
