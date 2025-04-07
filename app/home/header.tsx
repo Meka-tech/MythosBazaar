@@ -1,8 +1,9 @@
+import { useRouter } from "next/navigation";
 import React from "react";
 import { FaWpexplorer } from "react-icons/fa6";
-import { TbBinocularsFilled } from "react-icons/tb";
 
 const Header = () => {
+  const router = useRouter();
   return (
     <div className="mb-30 grid grid-cols-2 gap-10">
       <div className="w-full">
@@ -16,7 +17,12 @@ const Header = () => {
           wild designs, I've got you covered. It's all on the testnet, so no
           pressure.
         </p>
-        <div className=" w-fit  px-4 py-2 hover:bg-neutral-300 hover:text-black border-transparent border-b-[1px] border-b-neutral-300 cursor-pointer font-medium hover:rounded-lg ease-in-out transition-all duration-300 flex items-center gap-2 text-lg">
+        <div
+          className=" w-fit  px-4 py-2 hover:bg-neutral-300 hover:text-black border-transparent border-b-[1px] border-b-neutral-300 cursor-pointer font-medium hover:rounded-lg ease-in-out transition-all duration-300 flex items-center gap-2 text-lg"
+          onClick={() => {
+            router.push("/market-place");
+          }}
+        >
           Explore Marketplace <FaWpexplorer size={24} />
         </div>
       </div>
